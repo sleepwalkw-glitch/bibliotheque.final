@@ -39,18 +39,21 @@ public class LivreController {
     //3.Recherche par catégorie
     @GetMapping("/categories/{categorie}")
     //version 1 and 2
-  /*  public List<Livre> findByCategorie1(){
+    /*  public List<Livre> findByCategorie1(){
         //version 1: request the database by @Query
         //     return  livreService.findByCategorieV1();
         //version 2: call the method did not exist in JPA but created manuelle through verification
             return  livreService.findByCategorieV2();
     }
-
    */
     //version 3
     public List<Livre> findByCategorie2(@PathVariable String categorie) {
-        if (categorie != null && !categorie.isEmpty()) {
-            return (Livre) livreService.findByCategorieV3();
+        if (categorie == null || categorie.isEmpty()) {
+            throw new IllegalArgumentException("Categorie can not be null or empty!");
+        }
+        else {
+            return livreService.findByCategorieV3(categorie);
+        }
+    }
+    }
 
-
-}

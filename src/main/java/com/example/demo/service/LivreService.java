@@ -63,13 +63,12 @@ public class LivreService {
          return livreRepository.findByCategorieV1();
         }
 
-     */
 
-    /*
     //(2)version 2: by checking if the catégorie input is already exist in the database, if so, print the list , else pop alter information
     public List<Livre> findByCategorieV2() {
     // step 1: create a method to get a book by its categorie // step 2: compare the info of input with the list of categorie
     // 1.first way: to compare the input value with the categories existing in database
+    //here, Scanner method is not suitable because all request for input and output are realised by Postman through URL, but not in the process of programming the code
     Scanner categorieSC = new Scanner(System.in);
     List<Livre> Relist1 = livreRepository.findAll();
     List<Livre> LivreFindByCategorie = new ArrayList<>();
@@ -82,20 +81,19 @@ public class LivreService {
             }
         }
         return LivreFindByCategorie;
-
         }
-
      */
         //2.second way: to find the book by categorie by using method does not exist in JPA but with @Pathvariable
-    public List<Livre> findByCategorieV3() {
+    public List<Livre> findByCategorieV3(String categorie) {
         List<Livre> Relist2 = livreRepository.findAll();
-        String[] categoriesExisting = {"Classique","Cuisine", "Fantasy", "Histoire","Informatique","Philosophie","Roman","Science","Science-fiction", "Stratégie"};
         List<Livre> LivreFindByCategorie2 = new ArrayList<>();
 
         for (Livre lvr: Relist2){
-            if (lvr.getCategorie().equalsIgnoreCase())
+            if (lvr.getCategorie().equalsIgnoreCase(categorie)){
+                LivreFindByCategorie2.add(lvr);
+            }
         }
-        return livreRepository.findByCategorieV3();
+        return LivreFindByCategorie2;
     }
 }
 

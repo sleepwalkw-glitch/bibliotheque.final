@@ -26,5 +26,5 @@ public interface LivreRepository extends JpaRepository<Livre,Long> {
     //version 2 : do not need to write in repository
      */
     //version3 for findByCategorie2 in livreController
-     List<Livre> findByCategorieV3();
+
 }
