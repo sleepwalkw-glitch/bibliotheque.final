@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -31,16 +32,19 @@ public class Livre {
     private Integer exemplairesTotal;
 
     @Column(name = "exemplaires_disponibles")
-    private Integer getExemplairesDisponibles;
+    private Integer exemplairesDisponibles;
+
 
     // the relationship for HashMap and foreign key for map
     @OneToMany(mappedBy = "livre", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Emprunt> emprunts;
 
 //constructor default
     public Livre(){}
 
 //getter and setter
+
     public Long getId() {
         return id;
     }
@@ -97,12 +101,12 @@ public class Livre {
         this.exemplairesTotal = exemplairesTotal;
     }
 
-    public Integer getGetExemplairesDisponibles() {
-        return getExemplairesDisponibles;
+    public Integer getExemplairesDisponibles() {
+        return exemplairesDisponibles;
     }
 
-    public void setGetExemplairesDisponibles(Integer getExemplairesDisponibles) {
-        this.getExemplairesDisponibles = getExemplairesDisponibles;
+    public void setExemplairesDisponibles(Integer exemplairesDisponibles) {
+        this.exemplairesDisponibles = exemplairesDisponibles;
     }
 
     public List<Emprunt> getEmprunts() {
@@ -112,5 +116,6 @@ public class Livre {
     public void setEmprunts(List<Emprunt> emprunts) {
         this.emprunts = emprunts;
     }
+
 }
 
