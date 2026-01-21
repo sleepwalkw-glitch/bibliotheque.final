@@ -34,7 +34,7 @@ public class Membre {
 
     //here the relationship for HashMap, the primery key is managed by membre and there are two foreign keys, one for livre and another for emprunt
     @OneToMany(mappedBy = "membre",cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference // this annotation is for the format of JSON to be shown correctly in API, in the charger of the map with primary key,should be followed with @JsonManagedReference, and for the side of foreigner key, should follow with another annotation @JsonBackReference,or not, they won't be got correctly in the foreigner key side
     // for the service layer, it should be able to create method for List all the emprunt
     private List<Emprunt> emprunts;
 

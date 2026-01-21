@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*") //permission for the access of AJAX
@@ -55,5 +54,14 @@ public class LivreController {
             return livreService.findByCategorieV3(categorie);
         }
     }
+
+    //5.(1)create a book or (2)create a List<Livre> at one time
+    //(1)create a book
+        //    @PostMapping
+
+    //(2)create a List<Livre> at one time
+
     }
+
+
 

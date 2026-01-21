@@ -37,7 +37,7 @@ public class Livre {
 
     // the relationship for HashMap and foreign key for map
     @OneToMany(mappedBy = "livre", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference // this annotation is for the format of JSON to be shown correctly in API, in the charger of the map with primary key,should be followed with @JsonManagedReference, and for the side of foreigner key, should follow with another annotation @JsonBackReference,or not, they won't be got correctly in the foreigner key side
     private List<Emprunt> emprunts;
 
 //constructor default
