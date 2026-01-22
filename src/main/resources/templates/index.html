@@ -9,10 +9,18 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <h1>Hi</h1>
+    <h1>System Library</h1>
+    <!-- for the button, should verify wheather there is anything to show, then show, after that should remove the content for showing other content -->
+    <nav id="navBtn" class="navBtn">
+    <button id="livreBtn" class="livreBtn " onclick="afficherLivres()">Book</button>
+    <button id="membreBtn" class="membreBtn " onclick="afficherMembres()">Membre</button>
+    <button id="empruntBtn" class="empruntBtn " onclick="afficherEmprunt()">Emprunt</button>
+    </nav>
 
-    <div id="livreContenu"></div>
-    <!-- to create button with click event to show the info which will link to the info of membre -->
-     <div id="membreContenu"></div>
+    <!-- to create button with click event to show the info which will link to the info of membre ,one button work for one contenu , when click anothor they will change the content in the save place, element.textContent will be used for the function-->
+
+    <div id="divContenu" ></div>
+    <!-- <div id="membreContenu" ></div>
+    <div id="empruntBtn"></div> -->
 </body>
 </html>

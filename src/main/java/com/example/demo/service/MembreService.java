@@ -16,7 +16,6 @@ public class MembreService {
 
     public MembreService(MembreRepository membreRepository) {
         this.membreRepository = membreRepository;
-
     }
 
     //1. the method to get all members by using the method of JPA

@@ -24,12 +24,12 @@ public class Emprunt {
     // relationship for map and foreign key, and the foreign key used here to find an object in map
     @ManyToOne
     @JoinColumn(name="membre_id")
-    @JsonBackReference // this annotation is for the format of JSON to be shown correctly in API, in the charger of the map with primary key,should be followed with @JsonManagedReference, and for the side of foreigner key, should follow with another annotation @JsonBackReference,or not, they won't be got correctly in the foreigner key side
+    @JsonBackReference (value = "emprunt-membre")// this annotation is for the format of JSON to be shown correctly in API, in the charger of the map with primary key,should be followed with @JsonManagedReference, and for the side of foreigner key, should follow with another annotation @JsonBackReference,or not, they won't be got correctly in the foreigner key side
     private Membre membre;
     //relationship for map and foreign key , in the same Entity, there can be several JoinColumn to provide the foreign key
     @ManyToOne
     @JoinColumn(name="livre_id")
-    @JsonBackReference
+    @JsonBackReference (value = "emprunt-livre")
     private Livre livre;
 
 // constructor default
