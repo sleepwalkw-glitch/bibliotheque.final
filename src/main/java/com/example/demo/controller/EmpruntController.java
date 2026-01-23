@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
@@ -42,17 +43,34 @@ public class EmpruntController {
 
     // 3. Emprunts en retard
     @GetMapping("/enRetard")
-    public List<Emprunt> getEmpruntEnRetard(LocalDate localDate){
-        //(1)first version: @Query in repository  //(2)second version: with JPA and method
-        return empruntService.getEmpruntEnRetard(localDate);
+    public List<Emprunt> getEmpruntEnRetard(){
 
-
+        return empruntService.getEmpruntEnRetard();
     }
 
     // 4. Emprunts d'un membre spécifique
 
-    // 5. Emprunts d'un livre?
+    @GetMapping("/getEmprunt/{idMembre}")
+    public  List<Emprunt> getEmpruntMem(@PathVariable Long idMembre){
+        return empruntService.getEmpruntMem(getEmpruntById(idMembre));
+    }
 
+    //  5. Emprunts d'un livre
+    @GetMapping("/getEmprunt/{idLivre}")
+    public  List<Emprunt> getEmpruntLivre(@PathVariable Long idLivre){
+        return empruntService.getEmpruntLivre(getEmpruntById(idLivre));
+    }
+
+    /* Optional 6.Create new borrow for member and for book:  create an emprunt by updating the info for livre and for member as well as the emprunt
+   @PostMapping
+   public Emprunt createEmprunt(@RequestBody Map<String, String> body){
+       Long idLivre =Long.parseLong(body.get("idlivre"));
+       Long idMembre = Long.parseLong(body.get("idMembre"));
+       LocalDate dateRetourPrevue = LocalDate.parse(body.get("dateRetourPrevue"));
+
+       return  empruntService.createEmprunt(idLivre,idMembre,dateRetourPrevue);
+   }
+   */
 
 
 }

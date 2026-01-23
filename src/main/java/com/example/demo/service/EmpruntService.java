@@ -5,6 +5,7 @@ import com.example.demo.repository.EmpruntRepository;
 import com.example.demo.repository.LivreRepository;
 import com.example.demo.repository.MembreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -39,10 +40,6 @@ public class EmpruntService {
 
     // 2. Emprunts en cours
     public List<Emprunt> getEmpruntEnCour() {
-        //(1)first version: using JPQL of nativeQuery with @Query method in repository
-        //        return empruntRepository.getEmpruntEnCour();
-
-        //(2) second version: write a method to create a list with all the emprunts en cours reusing the method of JPA
         List<Emprunt> emprunts = empruntRepository.findAll();
         List<Emprunt> empruntEnCours = new ArrayList<>();
 
@@ -56,23 +53,61 @@ public class EmpruntService {
 
 
     // 3. Emprunts en retard
-    public List<Emprunt> getEmpruntEnRetard(LocalDate localDate) {
-        //(1)first version: @Query in repository
-//        return empruntRepository.getEmpruntEnRetard(localDate);
-        //(2)second version: with JPA and method
-        List<Emprunt> emprunts1 = empruntRepository.findAll();
-        List<Emprunt> empruntEnRetard = new ArrayList<>();
-        for(Emprunt e2: emprunts1){
-            if(e2.getDateRetourEffective() != null && e2.getDateRetourPrevue().isBefore(localDate) ){
-                empruntEnRetard.add(e2);
+    public List<Emprunt> getEmpruntEnRetard() {
+        return empruntRepository.getEmpruntEnRetard(LocalDate.now());
+    }
+
+    // 4. Emprunts d'un membre spécifique :
+
+        public List<Emprunt> getEmpruntMem(Emprunt empruntById){
+           List<Emprunt> emprunts2 = empruntRepository.findAll();
+           List<Emprunt> empruntMem = new ArrayList<>();
+           for(Emprunt e3:emprunts2){
+               if(e3.getId() == empruntById.getId()){
+                   empruntMem.add(e3);
+               }
+           }
+           return empruntMem;
+    }
+
+
+    // 5. Emprunts d'un livre
+
+    public List<Emprunt> getEmpruntLivre(Emprunt empruntById) {
+        //(2)second version
+        List<Emprunt> emprunts3 = empruntRepository.findAll();
+        List<Emprunt> empruntLivre = new ArrayList<>();
+
+        for(Emprunt e4: emprunts3){
+            if (e4.getId() == empruntById.getId()){
+                empruntLivre.add(e4);
             }
         }
-        return empruntEnRetard;
+        return empruntLivre;
     }
-    // 4. Emprunts d'un membre spécifique
 
+    /* Optional 6.Create new borrow for member and for book:
+   public Emprunt createEmprunt(Long idLivre, Long idMembre, LocalDate dateRetourPrevue) {
+       Livre livre = livreRepository.findById(idLivre)
+               .orElseThrow(()->new IllegalArgumentException("Book not found."));
 
-    // 5. Emprunts d'un livre?
+       if (livre.getExemplairesDisponibles() <= 0)
+           throw new IllegalArgumentException("No example has been found.");
+
+       Emprunt e = new Emprunt();
+       e.setLivre(livre);
+       e.setMembre(membreRepository.findById(idMembre).get());
+       e.getDateEmprunt(LocalDate.now());
+//        e.getDateRetourPrevue(dateRetourPrevue); to work on
+       e.getDateRetourEffective(null);
+
+       livre.setExemplairesDisponibles(livre.getExemplairesDisponibles());
+       livreRepository.save(livre);
+
+       return empruntRepository.save(e);
+
+   }
+   */
 
 
 }

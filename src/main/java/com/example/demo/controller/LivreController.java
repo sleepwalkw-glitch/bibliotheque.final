@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*") //permission for the access of AJAX
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/livres")
 public class LivreController {
 
-    @Autowired //injection of the service layer and initialisation
+    @Autowired
     public LivreService livreService;
 
     @GetMapping("/{id}")
@@ -29,23 +29,14 @@ public class LivreController {
     //2.Livres disponibles
     @GetMapping("/disponibles")
     public List<Livre> getLivresDispo(){
-        //version 1 :request the database by @Query
-        //   return livreService.getLivresDispoV1();
-        //version 2: call the method in JPA .findAll(),then verify the condition before print the list
         return livreService.getLivresDispoV2();
     }
 
+  
+
+
     //3.Recherche par catégorie
     @GetMapping("/categories/{categorie}")
-    //version 1 and 2
-    /*  public List<Livre> findByCategorie1(){
-        //version 1: request the database by @Query
-        //     return  livreService.findByCategorieV1();
-        //version 2: call the method did not exist in JPA but created manuelle through verification
-            return  livreService.findByCategorieV2();
-    }
-   */
-    //version 3
     public List<Livre> findByCategorie2(@PathVariable String categorie) {
         if (categorie == null || categorie.isEmpty()) {
             throw new IllegalArgumentException("Categorie can not be null or empty!");
@@ -55,11 +46,6 @@ public class LivreController {
         }
     }
 
-    //5.(1)create a book or (2)create a List<Livre> at one time
-    //(1)create a book
-        //    @PostMapping
-
-    //(2)create a List<Livre> at one time
 
     }
 

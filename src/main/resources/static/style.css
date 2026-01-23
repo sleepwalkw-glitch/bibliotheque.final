@@ -1,6 +1,31 @@
-.titre{
-    color: aqua;
+body {
+    font-size: 16px;
+    font-family: "PT Serif", Georgia, 'Times New Roman', serif;
+    color: #2C2C2C;
+    line-height: 1.5em;
+    background: #353c47;
 }
-.hidden{
-    display: none;
+
+.titre {
+    color: aqua;
+    background-color: aqua;
+}
+
+#navBtn {
+    background-color: rgb(31, 57, 49);
+}
+
+#divContenu {
+    background-color: #FFFAF0;
+}
+
+.divHeader {
+    width: auto;
+    background-color: #FFFAF0;
+    ;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
 }

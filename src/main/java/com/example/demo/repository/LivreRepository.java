@@ -20,11 +20,9 @@ public interface LivreRepository extends JpaRepository<Livre,Long> {
 
      //3.Searching by Categories
     /*
-    //Version 1
     @Query("SELECT l.titre, l.auteur, l.categorie FROM livre l GROUP BY l.titre, l.auteur, l.categorie; ")
     List<Livre> findByCategorieV1();
-    //version 2 : do not need to write in repository
+
      */
-    //version3 for findByCategorie2 in livreController
 
 }

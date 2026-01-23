@@ -1,134 +1,227 @@
-// https://localhost:8080/livres/all
-// (1)the way of fetch() (2)the way of asyn fetch()
-// (1)to show the info for the membre (2)to show the info for emprunt (3)to put all the info for the three parts within a button which will trigger the event to show the info
-
-/* 1.DOM for Livre:  this part is the fetch() for livre: can be GET and POST(not required right now)*/
-
 // console.log("loaded")
-// to show the json in DOM by the function json
+
 const divContenu = document.getElementById("divContenu")
 let mesLivres;
 
- function afficherLivres(){
-    console.log("afficher liver")
+/*************************for livreBtn*************************************************/
+
+/* 1.DOM for Livre:  */
+
+function afficherLivres() {
     clearDivContenuChildren(divContenu);
-    // if(divContenu.textContent === ""){
-    //      console.log("afficher liver null")
-    //     divContenu.style.display = "block";
 
-fetch("http://localhost:8080/api/livres/all")
+    fetch("http://localhost:8080/api/livres/all")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error Server");
+            }
+            return response.json();
+        })
+        .then(json => {
+            mesLivres = json;
 
-    .then(response => {
-        if(!response.ok){
-            throw new Error("Error Server");
-        }
-        return response.json();
-    })
+            const table = document.createElement("table");
+            table.className = "table table-striped table-hover table-bordered";
 
-    .then(json =>{
-        // here to show how to show the book
-        mesLivres = json;
-        // console.log(json)
-        // use for to get every object in the tableu so that they can be shown one after another
-        for(let livre of json){
-            // console.log(livre)
-            let livreElement = document.createElement("div");
-        livreElement.textContent =livre.titre +"ISBN:"+ livre.isbn;
+            const thead = document.createElement("thead");
+            thead.className = "thead-dark";
 
-        let isbnP = document.createElement("P");// create an object to use its method and attributes, but the way is differente from java, here in js, the attributes won't be proposed automatiquely, should go to inspect-console to check which are the attributes belongs to the object, but the syntax is the same.
-        isbnP.textContent = livre.isbn;
+            thead.innerHTML = `
+        <tr>
+           <th>ID</th>
+           <th>TITRE</th>
+           <th>AUTEUR</th>
+           <th>ISBN</th>
+           <th>ANNEE PUBLICATION</th>
+           <th>CATEGORIE</th>
+           <th>EXEMPLAIRES TOTAL</th>
+           <th>EXEMPLAIRE DISPONIBLE</th>
+        </tr>   
+        `;
 
-        let titreP = document.createElement("P");
-        titreP.textContent =document.createElement("p");
-       
-        divContenu.appendChild(livreElement);// inject the child element for the parent element so that it can be shown clearly
-        divContenu.appendChild(titreP);
-        divContenu.appendChild(isbnP);
+            const tbody = document.createElement("tbody");
 
-        // isbnP.classList.add("titre") // to create a style for the elements we would like to show 
+            for (let livre of json) {
+                const tr = document.createElement("tr");
+                tr.className = "table-primary";
 
-            // afficherLivers(livre);
-        }
-    })
-    
+                tr.innerHTML = `
+            <tr>
+            <td>${livre.id}</td>
+            <td>${livre.titre}</td>
+            <td>${livre.auteur}</td>
+            <td>${livre.isbn}</td>
+            <td>${livre.anneePublication}</td>
+            <td>${livre.categorie}</td>
+            <td>${livre.exemplairesTotal}</td>
+            <td>${livre.exemplairesDisponibles}</td>
+            </tr>
+            `;
 
-    .catch(error =>{
-        console.error(error);}
-    )
+                tbody.appendChild(tr);
+            }
 
-    // the method to be called in fetch() API by showing the DOM with content in html and styles in css
-   
-    // }else{
-    //      console.log("afficher liver non null")
-    //         divContenu.style.display ="none";
-             
-    // }
+            table.appendChild(thead);
+            table.appendChild(tbody);
+            divContenu.appendChild(table);
+        })
+        .catch(error => {
+            console.log(error);
+        })
 }
 
-    // function afficherLivres(listLivre){
-    //     let tableu = document.createElement("table");
-    // }
+/***************************for membreBtn*********************************************/
+//2.DOM for Membre:  */
 
-    /* 2.DOM for Membre: this part is the fetch()API for Membre: can be GET and PSOT(not required in project) */ 
-
-    // for the effect to show the content in every button one after another onclick,there are two way to do:
-    // (1) with classList, we need to verify if the container is null or not before show the content, it is better to create everyenvent one its own container;then remove the classList(hidden):
-    // if(divLiverContenu != ""){
-            // divMembreContenu.classList.add("hidden");
-            // divMembreContenu.classList.remove("hidden");
-    // (2) if we use the same container, the virification will be easier and everytime, and need to verify wheather it is null or not, before show another content , then remove it.
-    
-    // if(divLiverContenu != ""){
-    // divMembreContenu.classList.add("hidden");
-    // divMembreContenu.classList.remove("hidden");
-//    const divContenu = document.getElementById("divContenu");
-//     // divContenu.setAttribute="class";
-//     let mesMembre;
-
-    //here should write the verification for the addEventListener("onclick",) for the button, to check if there is already the content, if so to remove it, then to show : they can be done in two ways, (1)first is to remove the container before showing, (2)second way is to use use classList.add() to call the style of "hidden" class written in the container 
-   
-    function afficherMembres(){
-        clearDivContenuChildren(divContenu);
+function afficherMembres() {
+    clearDivContenuChildren(divContenu);
     fetch("http://localhost:8080/api/membres/all")
-        .then(response =>{
-            if(!response.ok){
+        .then(response => {
+            if (!response.ok) {
                 throw new Error("Error Server")
             }
             return response.json();
         })
 
-        .then(json =>{
+        .then(json => {
             mesMembre = json;
             console.log(mesMembre);
             // here can realise all the manipulation for DOM , for get the data , even the process of CRUD 
-            for(let membre of json){
+            for (let membre of json) {
                 let membreElement = document.createElement("div");
-                membreElement.textContent ="Name:"+ membre.nom +"Prenom:" +membre.prenom;
+                membreElement.textContent = "Name:" + membre.nom + "Prenom:" + membre.prenom;
                 let nomP = document.createElement("p")
                 nomP.textContent = membre.nom;
                 let prenomP = document.createElement("p");
                 prenomP.textContent = membre.prenom;
 
-            divContenu.appendChild(membreElement);
-            divContenu.appendChild(nomP);
-            divContenu.appendChild(prenomP);
+                divContenu.appendChild(membreElement);
+                divContenu.appendChild(nomP);
+                divContenu.appendChild(prenomP);
             }
 
         })
-        .catch(error =>{
-            console.error(error);}
+        .catch(error => {
+            console.error(error);
+        }
         )
-        }
+}
 
-    function clearDivContenuChildren(mydiv){
-           if(mydiv.childElementCount > 0){
-            let children = mydiv.childNodes;
-            children.forEach(child => {
-                mydiv.removeChild(child);
-            });
-           }
-        }
 
-    /* 3.DOM for Emprunt: this part is the fetch()API for Emprunt: can be GET and PSOT(not required in project) */ 
+/*******************************for empruntBtn******************************************************/
+/* 3.DOM for Emprunt: show only the emprunt en cours.this part is the fetch()API for Emprunt: can be GET and PSOT(not required in project) */
 
-    
+function afficherEmpruntEnCours() {
+    clearDivContenuChildren(divContenu);
+    fetch("http://localhost:8080/api/emprunts/encours")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error Server")
+            }
+            return response.json();
+        })
+
+        .then(json => {
+            mesEmpruntEnCours = json;
+
+            for (let empruntEnCours of json) {
+                console.log(empruntEnCours)
+
+                let empruntElementEnCours = document.createElement("div");
+                empruntElementEnCours.textContent = "Date of return required:" + empruntEnCours.dateRetourPrevue + "Date of Borrow: " + empruntEnCours.dateEmprunt;
+
+                let dateEmpruntP = document.createElement("p");
+                dateEmpruntP.textContent = empruntEnCours.dateEmprunt;
+                let dateRetourPrevueP = document.createElement("p");
+                dateRetourPrevueP.textContent = empruntEnCours.dateRetourPrevue;
+
+                divContenu.appendChild(empruntElementEnCours);
+                divContenu.appendChild(dateEmpruntP);
+                divContenu.appendChild(dateRetourPrevueP);
+            }
+        })
+
+        .catch(error => {
+            console.error(error);
+        })
+}
+
+/************************empruntEnRetardDayBtn********************************/
+// /* 4.DOM for Emprunt: show only the emprunt en cours.*/
+
+function affercherEmpruntEnRetardDays() {
+    //to vide the div
+    clearDivContenuChildren(divContenu);
+    //to get the method of emprunt en retard by fetch() API
+    fetch("http://localhost:8080/api/emprunts/enRetard")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Error Server");
+            }
+            return response.json();
+        })
+
+        .then(json => {
+            mesEmpruntEnRetard = json;
+
+            for (let empruntEnRetard of json) {
+                console.log(empruntEnRetard);
+
+                let empruntElementEnretard = document.createElement("div");
+
+                let retard = joursRetard(empruntEnRetard.dateRetourPrevue)
+
+                let empruntElementEnretardIdP = document.createElement("p");
+                empruntElementEnretardIdP.textContent = "Id of borrow:" + empruntEnRetard.id;
+
+                let empruntElementEnretardDateEmpruntp = document.createElement("p");
+                empruntElementEnretardDateEmpruntp.textContent = "with borrow date :" + empruntEnRetard.dateEmprunt;
+
+                let empruntElementEnretardDateRetourPrevuep = document.createElement("p");
+                empruntElementEnretardDateRetourPrevuep.textContent = "should be return as required in: " + empruntEnRetard.dateRetourPrevue;
+
+                let empruntElementEnretardJoursRetardp = document.createElement("p")
+                empruntElementEnretardJoursRetardp.textContent = "Days of been late is :" + retard;
+
+                empruntElementEnretard.appendChild(empruntElementEnretardIdP);
+                empruntElementEnretard.appendChild(empruntElementEnretardDateEmpruntp);
+                empruntElementEnretard.appendChild(empruntElementEnretardDateRetourPrevuep);
+                empruntElementEnretard.appendChild(empruntElementEnretardJoursRetardp);
+
+                divContenu.appendChild(empruntElementEnretard);
+
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+//to show how many days has been lated
+function joursRetard(dateRetourPrevue) {
+    let datePrevue = new Date(dateRetourPrevue);
+    let currentDate = new Date();
+
+    let milleSecondsDif = currentDate - datePrevue;
+    let jours = Math.floor(milleSecondsDif / (1000 * 60 * 60 * 24));
+    return jours > 0 ? jours : 0;
+}
+
+
+/************************the fifth button to show all searching area**********************************************************************/
+
+/*****searching liver by titre****************************/
+/*****filter by categorie*********************************/
+/*****afficher les emprunts d'un membre spécifique********/
+
+/******avancé*********************************************/
+/*****formulaire pour ajouter nouveau livre***************/
+/*****formulaire pour ajouter nouveau membre**************/
+/*****enregistrer un nouvel emprunt***********************/
+/*****update un emprunt for dateRetourEffective***********/
+/*****afficher le statistiques(all livre, membre actif, taux d'emprunt)********/
+
+/**********************function for remove the div*********************************************************************************/
+function clearDivContenuChildren(mydiv) {
+    mydiv.innerHTML = "";
+
+}

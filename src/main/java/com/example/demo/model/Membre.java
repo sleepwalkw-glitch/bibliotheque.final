@@ -26,22 +26,17 @@ public class Membre {
     private String telephone;
 
     @Column(name="date_inscription")
-            // here in Mysql and in java they should be written differently
      private LocalDate dateInscription;
 
     @Column(name="actif")
     private boolean actif;
 
-    //here the relationship for HashMap, the primery key is managed by membre and there are two foreign keys, one for livre and another for emprunt
     @OneToMany(mappedBy = "membre",cascade = CascadeType.ALL)
-    @JsonManagedReference (value = "emprunt-membre") // this annotation is for the format of JSON to be shown correctly in API, in the charger of the map with primary key,should be followed with @JsonManagedReference, and for the side of foreigner key, should follow with another annotation @JsonBackReference,or not, they won't be got correctly in the foreigner key side
-    // for the service layer, it should be able to create method for List all the emprunt
+    @JsonManagedReference (value = "emprunt-membre")
     private List<Emprunt> emprunts;
 
-//constructor default
     public Membre() {}
 
-//getter and setter
     public Membre(Long id, String nom, String prenom, String email, String telephone, LocalDate dateInscription, boolean actif, List<Emprunt> emprunts) {
         this.id = id;
         this.nom = nom;
