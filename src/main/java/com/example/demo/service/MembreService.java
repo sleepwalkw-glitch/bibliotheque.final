@@ -40,8 +40,7 @@ public class MembreService {
     /*
     //Optional work 4. method to create a member
     public Membre createMembre(Membre membre) {
-       return membreRepository.save(membre);
-    }
+       return membreRepository.save(membre);}
      */
 
     /*

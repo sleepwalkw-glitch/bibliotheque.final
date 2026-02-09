@@ -26,7 +26,6 @@ public class LivreService {
     public Livre getLivreById(Long id) {
         return livreRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("The book with id: " + id + " does not exist."));
-
     }
 
     //1. Liste complète

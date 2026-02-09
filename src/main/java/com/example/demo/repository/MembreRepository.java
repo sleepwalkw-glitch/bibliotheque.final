@@ -17,6 +17,5 @@ public interface MembreRepository extends JpaRepository<Membre,Long> {
 /* livre disponible
     @Query("SELECT* FROM livres WHERE examplaireDisponible>0")
     public  List<Livre> findAvecPlusDe0();
-
  */
 }

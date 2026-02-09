@@ -71,6 +71,4 @@ public class EmpruntController {
        return  empruntService.createEmprunt(idLivre,idMembre,dateRetourPrevue);
    }
    */
-
-
-}
+    }

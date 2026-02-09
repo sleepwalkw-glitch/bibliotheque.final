@@ -10,13 +10,10 @@ import java.util.List;
 
 @Repository
 public interface EmpruntRepository extends JpaRepository<Emprunt,Long> {
-
-
     /* 2. Emprunts en cours: version one
     @Query(value = "SELECT * FROM emprunt e WHERE e.date_retour_effective IS NULL;", nativeQuery = true ) syntax of nativeQuery .below is the code with JPQL way is correct
     @Query("SELECT e FROM Emprunt e WHERE e.dateRetourEffective IS NULL")
     List<Emprunt> getEmpruntEnCour();
-
      */
 
     //3.Emprunts en retard

@@ -58,7 +58,6 @@ public class EmpruntService {
     }
 
     // 4. Emprunts d'un membre spécifique :
-
         public List<Emprunt> getEmpruntMem(Emprunt empruntById){
            List<Emprunt> emprunts2 = empruntRepository.findAll();
            List<Emprunt> empruntMem = new ArrayList<>();

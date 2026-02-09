@@ -223,5 +223,4 @@ function joursRetard(dateRetourPrevue) {
 /**********************function for remove the div*********************************************************************************/
 function clearDivContenuChildren(mydiv) {
     mydiv.innerHTML = "";
-
 }

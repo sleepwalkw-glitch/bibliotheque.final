@@ -32,8 +32,6 @@ public class LivreController {
         return livreService.getLivresDispoV2();
     }
 
-  
-
 
     //3.Recherche par catégorie
     @GetMapping("/categories/{categorie}")
